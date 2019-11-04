@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather in the city</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+          href="../../css/bootstrap.min.css" />
+    <link rel="stylesheet" th:href="@{/css/mi.css}"
+          href="../../css/mi.css" />
+</head>
+<body>
+<d
+        iv class="container">
+    <div class="card">
+        <div class="card-header">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <h3 th:text="'Weather in '+${weather.getName()}+', '+${weather.getSystem().getCountry()+'.'}"></h3>
+                <a th:href="@{cities}">Manage Cities</a>
+            </nav>
+        </div>
+
+        <div class="card-body">
+            <h5 th:text="' There are '+ ${weather.getWeathers().get(0).getMain()}+' right now'">
+            </h5>
+            <table class="table table-striped table-bordered">
+                <tbody>
+                <tr th:object="${weather}">
+                    <td>Temperature:</td>
+                    <td th:text="${weather.getMain().getTemp()}+'ºC'"></td>
+                </tr>
+
+                <tr th:object="${weather}">
+                    <td>Pressure</td>
+                    <td th:text="${weather.getMain().getPressure()}+'hpa'"></td>
+                </tr>
+
+                <tr th:object="${weather}">
+                    <td>Humidity</td>
+                    <td th:text="${weather.getMain().getHumidity()+'%'}"></td>
+                </tr>
+
+                <tr th:object="${weather}">
+                    <td>Description: </td>
+                    <td th:text="${weather.getWeathers().get(0).getDescription()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <footer class="footer card-footer">
+                <p class="col-8 offset-2">All rights reserved to Zeyla 2019<br>
+                    Using Spring Boot, Thymeleaf and Mongodb</p>
+            </footer>
+        </div>
+    </div>
+</div>
+</body>
+</html>

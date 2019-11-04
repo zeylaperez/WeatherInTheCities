@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+          href="../../css/bootstrap.min.css" />
+    <link rel="stylesheet" th:href="@{/css/mi.css}"
+          href="../../css/mi.css" />
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3>New City</h3>
+        </div>
+        <div class="card-body">
+            <form th:action="@{save}" th:object="${city}" method="post">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">ID</label>
+                    <div class="col-sm-6">
+                        <input type="text" th:field="*{id}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-6">
+                        <input type="text" th:field="*{name}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <input type="submit" value="Add product" class="btn btn-outline-primary">
+                        <a th:href="@{cities}" class="btn btn-outline-danger">Cancelar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

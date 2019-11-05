@@ -3,9 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.model.City;
 import com.example.demo.model.Forecast;
 import com.example.demo.repository.CitiesRepository;
+import com.example.demo.service.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 public class WeatherController {
 
     @Autowired
-    private RestTemplate restTemplate;
+    private ApiService apiService;
 
     @Autowired
     private CitiesRepository repository;
@@ -30,12 +30,11 @@ public class WeatherController {
         return modelAndView;
     }
 
+    //Empleo de la API
     @GetMapping("/weatherInTheCity/{id}")
     public ModelAndView weatherInTheCity(@PathVariable String id) {
         ModelAndView view= new ModelAndView();
-        String url= "http://api.openweathermap.org/data/2.5/weather?id="+id+"&APPID=e4f74e412176755b9b7ee10ece2da8dd";
-
-        Forecast forecast = restTemplate.getForObject( url.trim(), Forecast.class);
+        Forecast forecast=apiService.getWeather(id);
         double Ctemp=forecast.getMain().getTemp()-273.15;
         int valor= (int) Ctemp;
         double decimal= Ctemp-valor;
@@ -46,8 +45,40 @@ public class WeatherController {
         view.addObject("weatherInTheCity");
         view.addObject("weather", forecast);
         view.setViewName("weatherInTheCity");
-
         return view;
     }
 
+    //Metodos REST:
+    @GetMapping("cities")
+    public ModelAndView selectAll(){
+        ModelAndView modelAndView= new ModelAndView();
+        List<City> cities = repository.findAll();
+        modelAndView.addObject("cities");
+        modelAndView.addObject("cities", cities);
+        modelAndView.setViewName("cities");
+        return modelAndView;
+    }
+
+    @GetMapping("/create")
+    public ModelAndView create(){
+        ModelAndView view= new ModelAndView();
+        City city=new City();
+        view.addObject("cityForm");
+        view.addObject("city",city);
+        view.setViewName("cityForm");
+        return  view;
+    }
+
+    @PostMapping("/save")
+    public ModelAndView save(City city){
+        repository.save(city);
+        return selectAll();
+    }
+
+    @GetMapping("/delete/{id}")
+    public ModelAndView delete(@PathVariable String id) {
+        City deleteCity = repository.findById(id).get();
+        repository.delete(deleteCity);
+        return selectAll();
+    }
 }

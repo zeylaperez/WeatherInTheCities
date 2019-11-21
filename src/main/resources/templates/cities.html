@@ -27,16 +27,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="city: ${cities}">
+                <tr th:each="city:${cities}">
                     <td th:text="${city.getId()}"></td>
                     <td th:utext="${city.getName()}"></td>
-                    <td><a th:href="@{delete+'/'+${city.getId()}}">Delete</a></td>
+                    <td><a th:href="@{'/cities/'+delete+'/'+${city.getId()}}">Delete</a></td>
+                    <!--<td><a th:href="@{delete+'/'+${city.getId()}}">Delete</a></td>-->
                 </tr>
                 </tbody>
                 <tfoot>
                 <tr>
                     <td colspan="5">
-                        <a th:href="@{create}">Insert a new city</a>
+                        <a th:href="@{'/cities/'+create}">Insert a new city</a>
+                        <!--<a th:href="@{create}">Insert a new city</a>-->
                     </td>
                 </tr>
                 </tfoot>

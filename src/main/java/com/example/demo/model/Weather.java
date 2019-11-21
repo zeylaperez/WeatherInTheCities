@@ -9,6 +9,10 @@ public class Weather {
 
     public Weather() {}
 
+    public Weather(String main, String description) {
+        this.main = main;
+        this.description = description;
+    }
 
     public String getDescription() {
         return description;

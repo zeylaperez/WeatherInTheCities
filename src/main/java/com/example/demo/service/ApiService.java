@@ -13,10 +13,13 @@ public class ApiService {
     private RestTemplate restTemplate;
     @Value("${resource}")
     private String resource;
+    @Value("${APPID}")
+    private String APPID;
 
     public Forecast getWeather(String id){
-        resource=resource+"?id="+id+"&APPID=e4f74e412176755b9b7ee10ece2da8dd";
-        Forecast forecast = restTemplate.getForObject(resource, Forecast.class);
+        String url=resource+"?id="+id+"&APPID="+APPID;
+        Forecast forecast = restTemplate.getForObject(url, Forecast.class);
         return forecast;
     }
+
 }
